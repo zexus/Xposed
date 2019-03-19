@@ -8,11 +8,11 @@ include $(CLEAR_VARS)
 ifeq (1,$(strip $(shell expr $(PLATFORM_SDK_VERSION) \>= 21)))
   LOCAL_SRC_FILES := app_main2.cpp
   LOCAL_MULTILIB := both
-  LOCAL_MODULE_STEM_32 := app_process32_xposed
-  LOCAL_MODULE_STEM_64 := app_process64_xposed
+  LOCAL_MODULE_STEM_32 := app_process32
+  LOCAL_MODULE_STEM_64 := app_process64
 else
   LOCAL_SRC_FILES := app_main.cpp
-  LOCAL_MODULE_STEM := app_process_xposed
+  LOCAL_MODULE_STEM := app_process
 endif
 
 LOCAL_SRC_FILES += \
@@ -46,7 +46,7 @@ ifeq (1,$(strip $(shell expr $(PLATFORM_SDK_VERSION) \>= 23)))
   LOCAL_SHARED_LIBRARIES += libwilhelm
 endif
 
-LOCAL_MODULE := xposed
+LOCAL_MODULE := app_process
 LOCAL_MODULE_TAGS := optional
 LOCAL_STRIP_MODULE := keep_symbols
 
@@ -56,6 +56,8 @@ ifeq ($(TARGET_IS_64_BIT),true)
 endif
 
 include $(BUILD_EXECUTABLE)
+
+include  $(BUILD_SYSTEM)/executable_prefer_symlink.mk
 
 ##########################################################
 # Library for Dalvik-/ART-specific functions
